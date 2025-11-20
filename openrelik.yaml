@@ -1,0 +1,6 @@
+# Showcase this worker on https://openrelik.org/marketplace
+publish: false
+
+# Worker Metadata.
+display_name: SFTP
+description: Upload files to a host using SFTP
