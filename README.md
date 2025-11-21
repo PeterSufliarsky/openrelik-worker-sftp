@@ -1,6 +1,6 @@
-# Openrelik worker sftp
+# OpenRelik worker for uploading files using SFTP
 ## Description
-**TODO:** Enter a comprehensive description of your worker here. Explain its purpose, what kind of tasks it handles, and any specific functionalities or integrations it provides.
+This worker can be used for uploading files to a server using SFTP.
 
 ## Deploy
 Add the below configuration to the OpenRelik docker-compose.yml file.
