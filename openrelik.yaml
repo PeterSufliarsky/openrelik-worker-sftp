@@ -4,3 +4,9 @@ publish: true
 # Worker Metadata.
 display_name: SFTP Upload
 description: Upload files to a host using SFTP. Can be used with SOF-ELK® for example.
+
+# Optional: Third-Party Tools Used by the Worker.
+tools:
+  - display_name: Paramiko
+    description: A Python implementation of SSHv2.
+    url: https://www.paramiko.org/
