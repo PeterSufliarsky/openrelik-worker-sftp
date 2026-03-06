@@ -1,6 +1,6 @@
 # Showcase this worker on https://openrelik.org/marketplace
-publish: false
+publish: true
 
 # Worker Metadata.
-display_name: SFTP
-description: Upload files to a host using SFTP
+display_name: SFTP Upload
+description: Upload files to a host using SFTP. Can be used with SOF-ELK® for example.
