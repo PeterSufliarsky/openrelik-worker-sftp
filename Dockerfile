@@ -1,15 +1,5 @@
-# Use the official Docker Hub Ubuntu base image
-FROM ubuntu:24.04
-
-# Prevent needing to configure debian packages, stopping the setup of
-# the docker container.
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-
-# Install poetry and any other dependency that your worker needs.
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl \
-    # Add your dependencies here
-    && rm -rf /var/lib/apt/lists/*
+# Use the official Docker Hub alpine base image
+FROM alpine:3.23
 
 # Install the latest uv binaries
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
@@ -21,8 +11,8 @@ ARG OPENRELIK_PYDEBUG_PORT
 ENV OPENRELIK_PYDEBUG_PORT=${OPENRELIK_PYDEBUG_PORT:-5678}
 
 # Create a user and group
-RUN groupadd openrelik
-RUN useradd openrelik -g openrelik -d /openrelik -m
+RUN addgroup openrelik
+RUN adduser -S openrelik -G openrelik -h /openrelik
 
 # Set working directory
 WORKDIR /openrelik
@@ -40,7 +30,7 @@ RUN uv sync --locked --no-install-project --no-dev
 COPY . ./
 
 # Installing separately from its dependencies allows optimal layer caching
-RUN uv sync --locked --no-dev
+# RUN uv sync --locked --no-dev
 
 # Install the worker and set environment to use the correct python interpreter.
 ENV PATH="/openrelik/.venv/bin:$PATH"
