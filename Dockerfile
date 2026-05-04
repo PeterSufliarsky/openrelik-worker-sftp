@@ -11,17 +11,24 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     # Add your dependencies here
     && rm -rf /var/lib/apt/lists/*
 
+# Install the latest uv binaries
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
 # Configure debugging
 ARG OPENRELIK_PYDEBUG
 ENV OPENRELIK_PYDEBUG=${OPENRELIK_PYDEBUG:-0}
 ARG OPENRELIK_PYDEBUG_PORT
 ENV OPENRELIK_PYDEBUG_PORT=${OPENRELIK_PYDEBUG_PORT:-5678}
 
+# Create a user and group
+RUN groupadd openrelik
+RUN useradd openrelik -g openrelik -d /openrelik -m
+
 # Set working directory
 WORKDIR /openrelik
 
-# Install the latest uv binaries
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+# Run as non-root user
+USER openrelik
 
 # Copy poetry toml and install dependencies
 COPY uv.lock pyproject.toml .
